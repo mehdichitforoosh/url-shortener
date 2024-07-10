@@ -6,7 +6,7 @@ interface UrlRepository {
 
     fun save(url: Url)
 
-    fun findOriginalUrl(shortUrl: String): Url?
+    fun findOriginalUrl(hashCode: String): Url?
 
-    fun hasCollision(shortUrl: String): Boolean
+    fun hasCollision(hashCode: String): Boolean
 }

@@ -7,15 +7,15 @@ class InMemoryUrlRepository : UrlRepository {
     private val urlMap = mutableMapOf<String, Url>()
 
     override fun save(url: Url) {
-        urlMap[url.shortUrl] = url
+        urlMap[url.hashCode] = url
     }
 
-    override fun findOriginalUrl(shortUrl: String): Url? {
-        return urlMap[shortUrl]
+    override fun findOriginalUrl(hashCode: String): Url? {
+        return urlMap[hashCode]
     }
 
-    override fun hasCollision(shortUrl: String): Boolean {
-        return urlMap.containsKey(shortUrl)
+    override fun hasCollision(hashCode: String): Boolean {
+        return urlMap.containsKey(hashCode)
     }
 
 }

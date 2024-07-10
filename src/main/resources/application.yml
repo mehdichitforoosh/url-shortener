@@ -3,3 +3,6 @@ spring:
     name: url-shortening-service
   profiles:
     active: dev
+
+hash:
+  length: 6

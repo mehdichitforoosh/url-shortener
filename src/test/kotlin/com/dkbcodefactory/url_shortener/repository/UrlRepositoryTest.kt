@@ -26,7 +26,7 @@ class UrlRepositoryTest {
         // Given and When
         sut.save(firstUrl)
         // Then
-        assertEquals(firstUrl, sut.findOriginalUrl(firstUrl.shortUrl))
+        assertEquals(firstUrl, sut.findOriginalUrl(firstUrl.hashCode))
     }
 
     @Test
@@ -35,7 +35,7 @@ class UrlRepositoryTest {
         sut.save(firstUrl)
         sut.save(secondUrl)
         // When
-        val result = sut.findOriginalUrl(firstUrl.shortUrl)
+        val result = sut.findOriginalUrl(firstUrl.hashCode)
         // Then
         assertEquals(firstUrl, result)
     }
@@ -46,7 +46,7 @@ class UrlRepositoryTest {
         sut.save(firstUrl)
         sut.save(secondUrl)
         // When
-        val result = sut.hasCollision(firstUrl.shortUrl)
+        val result = sut.hasCollision(firstUrl.hashCode)
         // Then
         assertTrue { result }
     }

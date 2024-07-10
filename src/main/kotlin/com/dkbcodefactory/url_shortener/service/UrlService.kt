@@ -6,5 +6,5 @@ interface UrlService {
 
     fun shortenUrl(originalUrl: String): Url
 
-    fun getOriginalUrl(shortUrl: String): Url?
+    fun getOriginalUrl(hashCode: String): Url?
 }

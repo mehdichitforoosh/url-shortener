@@ -3,7 +3,7 @@ package com.dkbcodefactory.url_shortener.service
 import com.dkbcodefactory.url_shortener.model.Url
 import com.dkbcodefactory.url_shortener.repository.InMemoryUrlRepository
 import com.dkbcodefactory.url_shortener.repository.UrlRepository
-import com.dkbcodefactory.url_shortener.service.generator.ShortUrlGenerator
+import com.dkbcodefactory.url_shortener.service.generator.HashCodeGenerator
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
@@ -16,9 +16,9 @@ import kotlin.test.assertNull
 class UrlServiceTest {
 
     private lateinit var urlRepository: UrlRepository
-    private lateinit var shortUrlGenerator: ShortUrlGenerator
+    private lateinit var hashCodeGenerator: HashCodeGenerator
 
-    private val shortUrl = "aBc43GHr"
+    private val hashCode = "aBc43GHr"
     private val originalUrl = "https://www.example.com"
 
     // Subject under test
@@ -27,45 +27,45 @@ class UrlServiceTest {
     @BeforeEach
     fun setup() {
         this.urlRepository = spyk(InMemoryUrlRepository())
-        this.shortUrlGenerator = mockk()
-        this.sut = DefaultUrlService(this.urlRepository, this.shortUrlGenerator)
+        this.hashCodeGenerator = mockk()
+        this.sut = DefaultUrlService(this.urlRepository, this.hashCodeGenerator)
     }
 
     @Test
     fun `SHOULD return the short url`() {
         // Given
-        every { shortUrlGenerator.generate(originalUrl) } returns shortUrl
+        every { hashCodeGenerator.generate(originalUrl) } returns hashCode
         // When
         val result = sut.shortenUrl(originalUrl)
         // Then
-        verify(exactly = 1) { urlRepository.hasCollision(shortUrl) }
+        verify(exactly = 1) { urlRepository.hasCollision(hashCode) }
         verify(exactly = 1) { urlRepository.save(any()) }
-        assertEquals(shortUrl, result.shortUrl)
+        assertEquals(hashCode, result.hashCode)
     }
 
     @Test
     fun `SHOULD return the short url with checking collisions`() {
         // Given
-        val newShortUrl = "bcDF653w"
-        val values = listOf(shortUrl, newShortUrl)
+        val newHashCode = "bcDF653w"
+        val values = listOf(hashCode, newHashCode)
         var count = 0
-        every { shortUrlGenerator.generate(originalUrl) } answers { values[count++] }
-        urlRepository.save(Url(shortUrl, originalUrl))
+        every { hashCodeGenerator.generate(originalUrl) } answers { values[count++] }
+        urlRepository.save(Url(hashCode, originalUrl))
         // When
         val result = sut.shortenUrl(originalUrl)
         // Then
         verify(exactly = 2) { urlRepository.hasCollision(any()) }
         verify(exactly = 2) { urlRepository.save(any()) }
-        assertEquals(newShortUrl, result.shortUrl)
+        assertEquals(newHashCode, result.hashCode)
     }
 
     @Test
     fun `SHOULD return the original url`() {
         // Given
-        every { shortUrlGenerator.generate(originalUrl) } returns shortUrl
+        every { hashCodeGenerator.generate(originalUrl) } returns hashCode
         sut.shortenUrl(originalUrl)
         // When
-        val result = sut.getOriginalUrl(shortUrl)
+        val result = sut.getOriginalUrl(hashCode)
         // Then
         assertEquals(originalUrl, result!!.originalUrl)
     }
@@ -73,7 +73,7 @@ class UrlServiceTest {
     @Test
     fun `SHOULD return null WHEN there is no shortUrl `() {
         // Given and When
-        val result = sut.getOriginalUrl(shortUrl)
+        val result = sut.getOriginalUrl(hashCode)
         // Then
         assertNull(result)
     }

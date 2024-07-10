@@ -1,6 +1,6 @@
 package com.dkbcodefactory.url_shortener.service.generator
 
-class RandomShortUrlGenerator : ShortUrlGenerator {
+class RandomHashCodeGenerator : HashCodeGenerator {
 
     override fun generate(originalUrl: String?, length: Int): String {
         val characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
