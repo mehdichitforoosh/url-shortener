@@ -1,32 +1,39 @@
 package com.dkbcodefactory.url_shortener.configuration
 
+import com.dkbcodefactory.url_shortener.repository.CassandraUrlRepository
 import com.dkbcodefactory.url_shortener.repository.InMemoryUrlRepository
 import com.dkbcodefactory.url_shortener.repository.UrlRepository
 import com.dkbcodefactory.url_shortener.service.generator.RandomShortUrlGenerator
 import com.dkbcodefactory.url_shortener.service.generator.Sha256ShortUrlGenerator
 import com.dkbcodefactory.url_shortener.service.generator.ShortUrlGenerator
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 
 @Configuration
 class ApplicationConfig {
 
     @Bean
-    @ConditionalOnProperty(name = ["services.short-url-generator"], havingValue = "random")
+    @Profile("dev")
     fun randomShortUrlGenerator(): ShortUrlGenerator {
         return RandomShortUrlGenerator()
     }
 
     @Bean
-    @ConditionalOnProperty(name = ["services.short-url-generator"], havingValue = "sha-256")
+    @Profile("dev")
+    fun inMemoryUrlRepository(): UrlRepository {
+        return InMemoryUrlRepository()
+    }
+
+    @Bean
+    @Profile("prod")
     fun sha256ShortUrlGenerator(): ShortUrlGenerator {
         return Sha256ShortUrlGenerator()
     }
 
     @Bean
-    @ConditionalOnProperty(name = ["repositories.url-repository"], havingValue = "in-memory")
-    fun inMemoryUrlRepository(): UrlRepository {
-        return InMemoryUrlRepository()
+    @Profile("prod")
+    fun cassandraUrlRepository(): UrlRepository {
+        return CassandraUrlRepository()
     }
 }

@@ -1,9 +1,5 @@
 spring:
   application:
     name: url-shortener
-
-services:
-  short-url-generator: random
-
-repositories:
-  url-repository: in-memory
+  profiles:
+    active: dev
