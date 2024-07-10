@@ -1,10 +1,8 @@
 package com.dkbcodefactory.url_shortener.repository
 
 import com.dkbcodefactory.url_shortener.model.Url
-import org.springframework.stereotype.Repository
 
-@Repository
-class DefaultUrlRepository : UrlRepository {
+class InMemoryUrlRepository : UrlRepository {
 
     private val urlMap = mutableMapOf<String, Url>()
 
