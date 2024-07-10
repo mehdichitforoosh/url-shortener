@@ -1,5 +1,6 @@
 package com.dkbcodefactory.url_shortener.service
 
+import com.dkbcodefactory.url_shortener.service.generator.Sha256ShortUrlGenerator
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 

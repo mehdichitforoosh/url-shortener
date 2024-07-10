@@ -2,6 +2,7 @@ package com.dkbcodefactory.url_shortener.service
 
 import com.dkbcodefactory.url_shortener.model.Url
 import com.dkbcodefactory.url_shortener.repository.UrlRepository
+import com.dkbcodefactory.url_shortener.service.generator.ShortUrlGenerator
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

@@ -2,9 +2,9 @@ package com.dkbcodefactory.url_shortener.configuration
 
 import com.dkbcodefactory.url_shortener.repository.InMemoryUrlRepository
 import com.dkbcodefactory.url_shortener.repository.UrlRepository
-import com.dkbcodefactory.url_shortener.service.RandomShortUrlGenerator
-import com.dkbcodefactory.url_shortener.service.Sha256ShortUrlGenerator
-import com.dkbcodefactory.url_shortener.service.ShortUrlGenerator
+import com.dkbcodefactory.url_shortener.service.generator.RandomShortUrlGenerator
+import com.dkbcodefactory.url_shortener.service.generator.Sha256ShortUrlGenerator
+import com.dkbcodefactory.url_shortener.service.generator.ShortUrlGenerator
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

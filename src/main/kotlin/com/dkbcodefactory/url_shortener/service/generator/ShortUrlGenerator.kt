@@ -1,4 +1,4 @@
-package com.dkbcodefactory.url_shortener.service
+package com.dkbcodefactory.url_shortener.service.generator
 
 interface ShortUrlGenerator {
 

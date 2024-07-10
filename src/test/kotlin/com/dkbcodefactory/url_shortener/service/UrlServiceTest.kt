@@ -3,6 +3,7 @@ package com.dkbcodefactory.url_shortener.service
 import com.dkbcodefactory.url_shortener.model.Url
 import com.dkbcodefactory.url_shortener.repository.InMemoryUrlRepository
 import com.dkbcodefactory.url_shortener.repository.UrlRepository
+import com.dkbcodefactory.url_shortener.service.generator.ShortUrlGenerator
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
