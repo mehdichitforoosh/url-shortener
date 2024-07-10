@@ -10,6 +10,6 @@ RUN ./gradlew clean build --no-daemon
 # Create the final image
 FROM openjdk:17-jdk-alpine
 WORKDIR /app
-COPY --from=build /app/build/libs/url-shortener-0.0.1-SNAPSHOT.jar /app/url-shortener.jar
+COPY --from=build /app/build/libs/url-shortening-service-0.0.1-SNAPSHOT.jar /app/url-shortening-service.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app/url-shortener.jar"]
+ENTRYPOINT ["java", "-jar", "/app/url-shortening-service.jar"]
