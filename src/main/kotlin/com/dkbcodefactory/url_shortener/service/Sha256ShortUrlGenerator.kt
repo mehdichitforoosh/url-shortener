@@ -9,7 +9,7 @@ class Sha256ShortUrlGenerator : ShortUrlGenerator {
         val bytes = MessageDigest.getInstance("SHA-256").digest(originalUrl!!.toByteArray())
         val shortUrl = Base64.getUrlEncoder()
             .encodeToString(bytes)
-            .substring(0, 8)
+            .substring(0, length)
         return shortUrl
     }
 }

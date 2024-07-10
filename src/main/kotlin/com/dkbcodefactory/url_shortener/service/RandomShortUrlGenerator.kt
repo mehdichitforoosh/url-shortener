@@ -6,6 +6,6 @@ class RandomShortUrlGenerator : ShortUrlGenerator {
         val characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
         return (1..length)
             .map { characters.random() }
-            .joinToString()
+            .joinToString("")
     }
 }
