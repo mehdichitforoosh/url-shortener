@@ -4,6 +4,7 @@ import com.dkbcodefactory.url_shortener.model.Url
 import com.dkbcodefactory.url_shortener.repository.InMemoryUrlRepository
 import com.dkbcodefactory.url_shortener.repository.UrlRepository
 import com.dkbcodefactory.url_shortener.service.generator.HashCodeGenerator
+import com.dkbcodefactory.url_shortener.service.generator.Sha256HashCodeGenerator
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.spyk
@@ -76,5 +77,20 @@ class UrlServiceTest {
         val result = sut.getOriginalUrl(hashCode)
         // Then
         assertNull(result)
+    }
+
+    @Test
+    fun `SHOULD return the short url with checking collisions in sha-256 generator`() {
+        // Given
+        this.hashCodeGenerator = spyk(Sha256HashCodeGenerator())
+        this.sut = DefaultUrlService(this.urlRepository, this.hashCodeGenerator)
+        val hashCode = this.hashCodeGenerator.generate(originalUrl)
+        urlRepository.save(Url(hashCode, originalUrl))
+        // When
+        sut.shortenUrl(originalUrl)
+        // Then
+        verify(atLeast = 1) { urlRepository.hasCollision(any()) }
+        verify(exactly = 2) { urlRepository.save(any()) }
+        verify(atLeast = 3) { hashCodeGenerator.generate(any()) }
     }
 }

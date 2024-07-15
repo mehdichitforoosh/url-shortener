@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import java.util.UUID
 
 @Service
 class DefaultUrlService @Autowired constructor(
@@ -22,7 +23,10 @@ class DefaultUrlService @Autowired constructor(
         logger.debug("Shorten url {}", originalUrl)
         var hashCode = hashCodeGenerator.generate(originalUrl, length)
         while (urlRepository.hasCollision(hashCode)) {
-            hashCode = hashCodeGenerator.generate(originalUrl)
+            // Add a unique id to the original url to make it unique to solve the collision issue in sha-256 generator
+            val uuid = UUID.randomUUID().toString()
+            val newUrlToHash = "$originalUrl+$uuid"
+            hashCode = hashCodeGenerator.generate(newUrlToHash)
         }
         val url = Url(hashCode, originalUrl)
         urlRepository.save(url)
