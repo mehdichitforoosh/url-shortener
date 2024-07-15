@@ -50,7 +50,7 @@ class UrlServiceTest {
         val newHashCode = "bcDF653w"
         val values = listOf(hashCode, newHashCode)
         var count = 0
-        every { hashCodeGenerator.generate(originalUrl) } answers { values[count++] }
+        every { hashCodeGenerator.generate(any()) } answers { values[count++] }
         urlRepository.save(Url(hashCode, originalUrl))
         // When
         val result = sut.shortenUrl(originalUrl)
